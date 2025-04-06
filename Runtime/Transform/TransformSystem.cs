@@ -2,12 +2,15 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-public partial struct TransformSystem : ISystem
+[UpdateInGroup(typeof(UISystemGroup))]
+[UpdateAfter(typeof(LayoutUpdateSystem))]
+public partial struct LayoutToTransformSystem : ISystem
 {
     void OnUpdate(ref SystemState state)
     {
         var query = SystemAPI.QueryBuilder()
             .WithAllRW<LocalTransform, UILayoutPosition>()
+            .WithAbsent<UIDocumentRoot>()
             .Build();
 
         if (!query.IsEmpty)

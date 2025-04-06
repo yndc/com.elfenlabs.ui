@@ -4,6 +4,8 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
+[UpdateInGroup(typeof(UISystemGroup))]
+[UpdateAfter(typeof(LayoutUpdateSystem))]
 public partial struct BackgroundSizeUpdateSystem : ISystem
 {
     void OnUpdate(ref SystemState state)

@@ -46,7 +46,7 @@ public partial struct UIInitializationSystem : ISystem
     {
         // Create the prototype entity for UI elements
         var mesh = MeshUtility.CreateQuad(new float2(1f, 1f));
-        var shader = Shader.Find("Elfenlabs/Sprite");
+        var shader = Shader.Find("Elfenlabs/Solid");
         var material = new Material(shader);
         var desc = new RenderMeshDescription(
             shadowCastingMode: ShadowCastingMode.Off,
@@ -57,6 +57,8 @@ public partial struct UIInitializationSystem : ISystem
             lightProbeUsage: LightProbeUsage.Off,
             staticShadowCaster: false
         );
+
+        material.enableInstancing = true;
 
         // Create an array of mesh and material required for runtime rendering.
         var renderMeshArray = new RenderMeshArray(new Material[] { material }, new Mesh[] { mesh });
@@ -78,7 +80,7 @@ public partial struct UIInitializationSystem : ISystem
             renderMeshArray,
             MaterialMeshInfo.FromRenderMeshArrayIndices(0, 0));
 
-        state.EntityManager.AddComponentData(quadPrototype, new SpriteBackgroundColor
+        state.EntityManager.AddComponentData(quadPrototype, new URPMaterialPropertyBaseColor
         {
             Value = new float4(1f, 1f, 0f, 1f),
         });

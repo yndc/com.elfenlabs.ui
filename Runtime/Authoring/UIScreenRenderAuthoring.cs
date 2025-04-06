@@ -55,13 +55,13 @@ public class UIScreenRenderAuthoring : MonoBehaviour
 
     void TestRun()
     {
+        AddElement(new float2(50f, 50f), new float4(1f, 0f, 0f, 1f)); 
         AddElement(new float2(50f, 50f), new float4(0f, 1f, 0f, 1f)); 
-        AddElement(new float2(50f, 50f), new float4(0f, 1f, 0f, 1f)); 
-        AddElement(new float2(50f, 50f), new float4(0f, 1f, 0f, 1f));
+        AddElement(new float2(50f, 50f), new float4(0f, 0f, 1f, 1f));
         AddElement(new float2(200f, 100f), new float4(1f, 0f, 0f, 1f));
         for (int i = 0; i < 20; i++)
         {
-            AddElement(new float2(50f, 50f), new float4(0f, 1f, 0f, 1f));
+            AddElement(new float2(50f, 50f), new float4(1f, 1f, 0f, 1f));
         }
     }
 

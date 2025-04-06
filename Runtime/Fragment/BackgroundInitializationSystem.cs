@@ -1,6 +1,11 @@
+using Elfenlabs.Mesh;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using Unity.Rendering;
 using Unity.Transforms;
+using UnityEngine;
+using UnityEngine.Rendering;
 
 public struct UIBackgroundEntity : IComponentData
 {
@@ -46,7 +51,7 @@ public partial struct BackgroundInitializationSystem : ISystem
             ECB.AppendToBuffer(chunkIndexInQuery, entity, new UIFragments { Value = quad });
             ECB.AddComponent(chunkIndexInQuery, entity, new UIBackgroundEntity { Value = quad });
             ECB.SetComponent(chunkIndexInQuery, quad, new Parent { Value = entity });
-            ECB.SetComponent(chunkIndexInQuery, quad, new SpriteBackgroundColor { Value = backgroundColor.Value });
+            ECB.SetComponent(chunkIndexInQuery, quad, new URPMaterialPropertyBaseColor { Value = backgroundColor.Value });
         }
     }
 }
