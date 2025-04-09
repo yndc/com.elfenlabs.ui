@@ -5,6 +5,7 @@ using Unity.Transforms;
 using Elfenlabs.Mesh;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Elfenlabs.Rendering;
 
 public struct UIQuadPrototype : IComponentData
 {
@@ -23,7 +24,7 @@ public struct UICameraTransform : IComponentData
 }
 
 [UpdateInGroup(typeof(UIInitializationSystemGroup))]
-[CreateAfter(typeof(ScreenInfoSystem))]
+[CreateAfter(typeof(EntitiesGraphicsSystem))]
 public partial struct UIInitializationSystem : ISystem
 {
     void OnCreate(ref SystemState state)
@@ -60,8 +61,8 @@ public partial struct UIInitializationSystem : ISystem
 
         material.enableInstancing = true;
 
-        // Create an array of mesh and material required for runtime rendering.
-        var renderMeshArray = new RenderMeshArray(new Material[] { material }, new Mesh[] { mesh });
+        var meshID = RenderUtility.RegisterMesh(state.World, mesh);
+        var materialID = RenderUtility.RegisterMaterial(state.World, material);
 
         // Create empty base entity
         var quadPrototype = state.EntityManager.CreateEntity();
@@ -77,8 +78,8 @@ public partial struct UIInitializationSystem : ISystem
             quadPrototype,
             state.EntityManager,
             desc,
-            renderMeshArray,
-            MaterialMeshInfo.FromRenderMeshArrayIndices(0, 0));
+            // renderMeshArray,
+            new MaterialMeshInfo(materialID, meshID));
 
         state.EntityManager.AddComponentData(quadPrototype, new URPMaterialPropertyBaseColor
         {
